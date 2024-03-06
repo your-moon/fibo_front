@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import React from "react";
-import { Button, Checkbox, cn } from "@nextui-org/react";
+import { Button, Checkbox, Input, cn } from "@nextui-org/react";
 import Editor from "@/app/components/editor";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -39,6 +39,7 @@ const INITIAL_DATA = {
 function Write() {
   const router = useRouter();
   const [data, setData] = React.useState<any>();
+  const [title, setTitle] = React.useState<string>("");
   const [isPublished, setIsPublished] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
 
@@ -59,8 +60,16 @@ function Write() {
   };
 
   return (
-    <div className="h-screen">
-      <div id="editorjs"></div>
+    <div className="flex flex-col items-center justify-center">
+      <Input
+        className="max-w-[800px] mx-56 my-20"
+        size="lg"
+        placeholder="Title"
+        value={title}
+        onValueChange={setTitle}
+        variant="underlined"
+      />
+      <div className="w-full" id="editorjs"></div>
       <DynamicEditor
         data={data}
         onChange={(data) => {

@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Editor from "@/app/components/editor";
 import { RPost } from "@/app/components/posts";
-import { Button, Checkbox, cn } from "@nextui-org/react";
+import { Button, Checkbox, Input, cn } from "@nextui-org/react";
 import {
   QueryClient,
   QueryClientProvider,
@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
 import { BACKEND_URL } from "@/app/provider";
+import Loading from "@/app/components/loader";
 
 const DynamicEditor = dynamic(() => import("@/app/components/editor"), {
   ssr: false,
@@ -35,6 +36,7 @@ export default function Page({ params }: { params: { id: number } }) {
 function EditSinglePost({ params }: { params: { id: number } }) {
   const router = useRouter();
   const [content, setContent] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const [isPublished, setIsPublished] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const { isPending, error, data } = useQuery({
@@ -48,6 +50,7 @@ function EditSinglePost({ params }: { params: { id: number } }) {
     if (data && data.data) {
       setContent(data.data.Content);
       setIsPublished(data.data.IsPublished);
+      setTitle(data.data.Title);
     }
     console.log(data);
   }, [data]);
@@ -67,7 +70,7 @@ function EditSinglePost({ params }: { params: { id: number } }) {
         Authorization: `${token}`,
       },
       body: JSON.stringify({
-        Title: data.data.Title,
+        Title: title,
         Content:
           typeof content === "string" ? content : JSON.stringify(content),
         Is_published: isPublished,
@@ -82,21 +85,30 @@ function EditSinglePost({ params }: { params: { id: number } }) {
     }
   };
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending) return <Loading />;
 
   if (error) return <p>Error: {error.message}</p>;
 
   if (!data.data) return <p>No data</p>;
 
   return (
-    <div className="mx-96 mt-20">
-      <div id="editorjs"></div>
+    <div className="flex flex-col items-center justify-center">
+      <Input
+        className="max-w-[800px] mx-56 my-20"
+        size="lg"
+        placeholder="Title"
+        value={title}
+        onValueChange={setTitle}
+        variant="underlined"
+      />
+
+      <div className="w-full" id="editorjs"></div>
       <DynamicEditor
         data={JSON.parse(data.data.Content)}
         onChange={setContent}
         editorBlock="editorjs"
       />
-      <div className="flex flex-col items-center justify-center my-4">
+      <div className="min-w-[250px] flex flex-col items-center justify-center my-4">
         <Checkbox
           classNames={{
             base: cn(
