@@ -83,6 +83,11 @@ export default function Navbar() {
             BackOffice
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/user/write">
+            Write
+          </Link>
+        </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
