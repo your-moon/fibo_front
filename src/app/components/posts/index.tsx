@@ -20,6 +20,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SinglePost } from "../singlePost";
 import { BACKEND_URL } from "@/app/provider";
+import Loading from "../loader";
 
 export default function Posts() {
   const { isPending, error, data } = useQuery({
@@ -29,7 +30,7 @@ export default function Posts() {
         (res) => res.json() as Promise<PostResponse>,
       ),
   });
-  if (isPending) return "Loading...";
+  if (isPending) return <Loading />;
 
   if (error) return "An error has occurred: " + error.message;
 

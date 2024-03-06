@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/app/components/loader";
 import PostContent from "@/app/components/postcontent";
 import { RPost } from "@/app/components/posts";
 import { BACKEND_URL } from "@/app/provider";
@@ -32,7 +33,7 @@ function SinglePostPage({ params }: { params: { id: number } }) {
       ),
   });
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending) return <Loading />;
 
   if (error) return <p>Error: {error.message}</p>;
 
