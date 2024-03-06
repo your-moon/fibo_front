@@ -45,6 +45,7 @@ export default function Posts() {
             likes={article.Likes}
             title={article.Title}
             content={article.Content}
+            isPublished={article.IsPublished}
           />
         </div>
       ))}

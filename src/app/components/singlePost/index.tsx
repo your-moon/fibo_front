@@ -8,19 +8,29 @@ import {
   CardHeader,
   Link,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { HeartIcon } from "./heartIcon";
 import PostContent from "../postcontent";
+import { BACKEND_URL } from "@/app/provider";
+import Cookie from "js-cookie";
 
 interface SinglePostProps {
   id: number;
   likes: number;
   title: string;
   content: string;
+  isPublished: boolean;
 }
 
-export const SinglePost = ({ id, likes, title, content }: SinglePostProps) => {
+export const SinglePost = ({
+  id,
+  likes,
+  title,
+  content,
+  isPublished,
+}: SinglePostProps) => {
   const [isLiked, setIsLiked] = React.useState(false);
+  const [likesCount, setLikesCount] = React.useState(likes);
 
   return (
     <Card
@@ -49,7 +59,25 @@ export const SinglePost = ({ id, likes, title, content }: SinglePostProps) => {
           isIconOnly
           color="danger"
           variant="flat"
-          onPress={() => setIsLiked(!isLiked)}
+          onPress={async () => {
+            const res = await fetch(`${BACKEND_URL}/posts/${id}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `${Cookie.get("token")}`,
+              },
+              body: JSON.stringify({
+                title: title,
+                content: content,
+                likes: isLiked ? likesCount - 1 : likesCount + 1,
+                is_published: isPublished,
+              }),
+            });
+            if (res.ok) {
+              setIsLiked(!isLiked);
+              setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
+            }
+          }}
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
@@ -63,7 +91,9 @@ export const SinglePost = ({ id, likes, title, content }: SinglePostProps) => {
       </CardBody>
       <CardFooter className="gap-3">
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">{likes}</p>
+          <p className="font-semibold text-default-400 text-small">
+            {likesCount}
+          </p>
           <p className=" text-default-400 text-small">Likes</p>
         </div>
       </CardFooter>
