@@ -19,12 +19,13 @@ export interface RPost {
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SinglePost } from "../singlePost";
+import { BACKEND_URL } from "@/app/provider";
 
 export default function Posts() {
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("http://localhost:3005/posts/published", {}).then(
+      fetch(`${BACKEND_URL}/posts/published`, {}).then(
         (res) => res.json() as Promise<PostResponse>,
       ),
   });

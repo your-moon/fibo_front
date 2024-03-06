@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
+import { BACKEND_URL } from "@/app/provider";
 
 interface SinglePostResponse {
   status: number;
@@ -34,7 +35,7 @@ function EditSinglePost({ params }: { params: { id: number } }) {
   const { isPending, error, data } = useQuery({
     queryKey: ["post", params.id],
     queryFn: () =>
-      fetch(`http://localhost:3005/posts/${params.id}`).then((res) => {
+      fetch(`${BACKEND_URL}/posts/${params.id}`).then((res) => {
         return res.json() as Promise<SinglePostResponse>;
       }),
   });
@@ -54,7 +55,7 @@ function EditSinglePost({ params }: { params: { id: number } }) {
     }
     if (!data) return;
 
-    const res = await fetch(`http://localhost:3005/posts/${params.id}`, {
+    const res = await fetch(`${BACKEND_URL}/posts/${params.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -18,7 +18,7 @@ export default function Navbar() {
     if (Cookie.get("token")) {
       setIsLogged(true);
     }
-  });
+  }, []);
 
   if (isLogged) {
     return (
