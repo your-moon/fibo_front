@@ -46,7 +46,7 @@ function Write() {
     const token = Cookie.get("token");
 
     if (!token) {
-      router.push("/login");
+      router.push("/user/login");
       return;
     }
 
@@ -96,4 +96,3 @@ function Write() {
     </div>
   );
 }
-
