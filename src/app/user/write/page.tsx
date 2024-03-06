@@ -1,11 +1,27 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React from "react";
-import { newPost } from "./data";
 import { Button, Checkbox, cn } from "@nextui-org/react";
 import Editor from "@/app/components/editor";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BACKEND_URL } from "@/app/provider";
+import { newPost } from "./data";
+
+const DynamicEditor = dynamic(() => import("@/app/components/editor"), {
+  ssr: false,
+});
+
+export default function Page() {
+  return (
+    <QueryClientProvider client={new QueryClient()}>
+      <Write />
+    </QueryClientProvider>
+  );
+}
+
 // Initial Data
 const INITIAL_DATA = {
   time: new Date().getTime(),
@@ -20,14 +36,20 @@ const INITIAL_DATA = {
   ],
 };
 
-export default function Write() {
+function Write() {
   const router = useRouter();
   const [data, setData] = React.useState<any>();
   const [isPublished, setIsPublished] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
-  const token = Cookie.get("token");
 
   const bOnClick = async () => {
+    const token = Cookie.get("token");
+
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+
     let res = await newPost(JSON.stringify(data), token, isPublished);
     if (res.status === 200) {
       setIsSaving(true);
@@ -39,13 +61,13 @@ export default function Write() {
   return (
     <div className="h-screen">
       <div id="editorjs"></div>
-      {/* <Editor
-          data={data}
-          onChange={(data) => {
-            setData(data);
-          }}
-          editorBlock="editorjs"
-        /> */}
+      <DynamicEditor
+        data={data}
+        onChange={(data) => {
+          setData(data);
+        }}
+        editorBlock="editorjs"
+      />
       <div id="editorjs"></div>
       <div className="flex flex-col items-center justify-center my-4">
         <Checkbox
@@ -74,3 +96,4 @@ export default function Write() {
     </div>
   );
 }
+

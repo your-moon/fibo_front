@@ -1,6 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
+
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import React, { useEffect } from "react";
