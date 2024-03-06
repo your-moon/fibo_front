@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import React, { useEffect } from "react";
@@ -41,7 +42,7 @@ const Editor = ({ data, onChange, editorBlock }: EditorProps) => {
         ref.current.destroy();
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

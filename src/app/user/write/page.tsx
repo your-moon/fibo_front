@@ -35,11 +35,18 @@ export default function Write() {
     }
     console.log(res);
   };
+
   return (
     <div className="h-screen">
       <div id="editorjs"></div>
-      <Editor data={data} onChange={setData} editorBlock="editorjs-container" />
-      <div id="editorjs-container"></div>
+      {/* <Editor
+          data={data}
+          onChange={(data) => {
+            setData(data);
+          }}
+          editorBlock="editorjs"
+        /> */}
+      <div id="editorjs"></div>
       <div className="flex flex-col items-center justify-center my-4">
         <Checkbox
           classNames={{
@@ -54,8 +61,7 @@ export default function Write() {
           isSelected={isPublished}
           onValueChange={setIsPublished}
         >
-          {" "}
-          Publish{" "}
+          Publish
         </Checkbox>
         <Button
           className="max-w-[250px] min-w-[200px] mt-2"
