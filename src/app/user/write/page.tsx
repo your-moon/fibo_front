@@ -51,7 +51,7 @@ function Write() {
       return;
     }
 
-    let res = await newPost(JSON.stringify(data), token, isPublished);
+    let res = await newPost(JSON.stringify(data), token, isPublished, title);
     if (res.status === 200) {
       setIsSaving(true);
       router.push("/");

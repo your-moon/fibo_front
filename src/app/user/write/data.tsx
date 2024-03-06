@@ -4,6 +4,7 @@ export async function newPost(
   data: string,
   token: string,
   isPublish: boolean,
+  title: string,
 ): Promise<any> {
   const res = await fetch(`${BACKEND_URL}/posts`, {
     method: "POST",
@@ -13,7 +14,7 @@ export async function newPost(
       Authorization: token,
     },
     body: JSON.stringify({
-      title: "test",
+      title: title,
       is_published: isPublish,
       content: data,
     }),

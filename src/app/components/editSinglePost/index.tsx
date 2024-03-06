@@ -39,7 +39,7 @@ export const EditSinglePost = ({
             src="/avatars/avatar-1.png"
           />
           <div className="flex flex-col gap-1 items-start justify-center">
-            <h4 className="text-small font-semibold leading-none text-default-600">
+            <h4 className="max-w-[130px] text-small font-semibold leading-none text-default-600 text-ellipsis overflow-hidden ...">
               {title}
             </h4>
             <h5 className="text-small tracking-tight text-default-400">

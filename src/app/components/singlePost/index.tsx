@@ -26,7 +26,7 @@ export const SinglePost = ({ id, likes, title, content }: SinglePostProps) => {
     <Card
       as={Link}
       href={`/posts/${id}`}
-      className="h-40 max-h-80 min-w-[260px] max-w-[340px] mx-1 mb-2"
+      className="h-40 max-h-80 min-w-[260px] max-w-[300px] mx-1 mb-2"
     >
       <CardHeader className="justify-between">
         <div className="flex gap-5">
@@ -37,7 +37,7 @@ export const SinglePost = ({ id, likes, title, content }: SinglePostProps) => {
             src="/avatars/avatar-1.png"
           />
           <div className="flex flex-col gap-1 items-start justify-center">
-            <h4 className="text-small font-semibold leading-none text-default-600">
+            <h4 className="w-28 text-small font-semibold leading-none text-default-600 text-ellipsis overflow-hidden ...">
               {title}
             </h4>
             <h5 className="text-small tracking-tight text-default-400">
