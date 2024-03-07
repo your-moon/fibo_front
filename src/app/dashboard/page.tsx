@@ -46,8 +46,8 @@ function Dashboard() {
   if (error)
     return (
       <div className="mx-64 mt-12 mb-20">
+        <h2 className="mx-12 my-5">{error.message}</h2>
         <div className="flex flex-row ">
-          <h2>{error.message}</h2>
           <BigCard title="Reputation" value={0} valueColor="text-violet-300" />
           <BigCard
             title="Ongoing Salary"
