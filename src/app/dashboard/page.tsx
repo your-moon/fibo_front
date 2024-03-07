@@ -54,7 +54,7 @@ function Dashboard() {
 
   if (!data.data)
     return (
-      <div className="mx-64 mt-12">
+      <div className="mx-64 mt-12 mb-20">
         <div className="flex flex-row ">
           <BigCard
             title="Reputation"
@@ -75,7 +75,7 @@ function Dashboard() {
     );
 
   return (
-    <div className="mx-72 mt-12">
+    <div className="mx-72 mt-12 mb-20">
       <div className="flex flex-row ">
         <BigCard title="Reputation" value={100} valueColor="text-violet-300" />
         <BigCard

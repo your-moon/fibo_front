@@ -89,7 +89,7 @@ function Admin() {
   if (!users.data) return <div>No data</div>;
 
   return (
-    <div className="mx-60 mt-12">
+    <div className="mx-60 mt-12 mb-20">
       <div className="flex flex-row ">
         <BigCard
           title="Total Authors"
