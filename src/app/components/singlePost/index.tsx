@@ -62,7 +62,7 @@ export const SinglePost = ({
     <Card
       as={Link}
       href={`/posts/${id}`}
-      className="h-48 max-h-80 min-w-[260px] max-w-[300px] mx-1 mb-2"
+      className="h-40 max-h-80 min-w-[260px] max-w-[300px] mx-1 mb-2"
     >
       <CardHeader className="justify-between">
         <div className="flex gap-5">
@@ -113,7 +113,7 @@ export const SinglePost = ({
           <HeartIcon filled={isLiked} />
         </Button>
       </CardHeader>
-      <CardBody className="px-4 py-0 text-small text-default-400">
+      <CardBody className="px-4 py-0 text-small text-default-400 text-ellipsis overflow-hidden ...">
         <PostContent content={content} />
       </CardBody>
       <CardFooter className="gap-3">
