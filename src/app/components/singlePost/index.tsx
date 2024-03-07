@@ -8,11 +8,13 @@ import {
   CardHeader,
   Link,
 } from "@nextui-org/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { HeartIcon } from "./heartIcon";
 import PostContent from "../postcontent";
 import { BACKEND_URL } from "@/app/provider";
 import Cookie from "js-cookie";
+import { useQuery } from "@tanstack/react-query";
+import { SingleCatResponse } from "../editSinglePost";
 
 interface SinglePostProps {
   id: number;
@@ -20,6 +22,7 @@ interface SinglePostProps {
   title: string;
   content: string;
   isPublished: boolean;
+  categoryId: number;
 }
 
 export const SinglePost = ({
@@ -28,15 +31,38 @@ export const SinglePost = ({
   title,
   content,
   isPublished,
+  categoryId,
 }: SinglePostProps) => {
   const [isLiked, setIsLiked] = React.useState(false);
   const [likesCount, setLikesCount] = React.useState(likes);
+  const [catName, setCatName] = useState<string>(""); // [1]
+  const { isPending, error, data } = useQuery({
+    queryKey: ["cats"],
+    queryFn: () =>
+      fetch(`${BACKEND_URL}/categories/${categoryId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json() as Promise<SingleCatResponse>),
+  });
+
+  useEffect(() => {
+    if (data && data.data) {
+      console.log(data.data);
+      setCatName(data.data.Name); // [2]
+    }
+  }, [data]);
+
+  if (isPending) return <div>Loading...</div>;
+
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <Card
       as={Link}
       href={`/posts/${id}`}
-      className="h-40 max-h-80 min-w-[260px] max-w-[300px] mx-1 mb-2"
+      className="h-48 max-h-80 min-w-[260px] max-w-[300px] mx-1 mb-2"
     >
       <CardHeader className="justify-between">
         <div className="flex gap-5">
@@ -51,7 +77,7 @@ export const SinglePost = ({
               {title}
             </h4>
             <h5 className="text-small tracking-tight text-default-400">
-              @zoeylang
+              @{catName ? catName : ":("}
             </h5>
           </div>
         </div>
@@ -71,6 +97,7 @@ export const SinglePost = ({
                 content: content,
                 likes: isLiked ? likesCount - 1 : likesCount + 1,
                 is_published: isPublished,
+                category_id: categoryId,
               }),
             });
             if (res.ok) {

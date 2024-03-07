@@ -42,10 +42,8 @@ function SinglePostPage({ params }: { params: { id: number } }) {
     <div className="mx-96 mt-20 flex flex-col ">
       <h1 className="mb-12">{data.data.Title}</h1>
       <PostContent content={data.data.Content} />
-      <div className="flex flex-row-reverse sticky bottom-0">
-        <Button disabled={true} className="sticky bottom-0">
-          {data.data.Likes} Likes
-        </Button>
+      <div className="flex flex-row-reverse my-20">
+        <Button disabled={true}>{data.data.Likes} Likes</Button>
       </div>
     </div>
   );

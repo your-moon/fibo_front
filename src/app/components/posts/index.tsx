@@ -11,6 +11,7 @@ export interface RPost {
   Title: string;
   Content: string;
   Likes: number;
+  CategoryId: number;
   IsPublished: boolean;
   created_at: string;
   Updated_at: string;
@@ -36,9 +37,10 @@ export default function Posts() {
 
   if (!data.data) return "No data";
 
+  console.log(data);
   return (
     <div className="flex flex-row flex-wrap">
-      {data?.data.map((article: RPost) => (
+      {data.data.map((article: RPost) => (
         <div key={article.Id}>
           <SinglePost
             id={article.Id}
@@ -46,6 +48,7 @@ export default function Posts() {
             title={article.Title}
             content={article.Content}
             isPublished={article.IsPublished}
+            categoryId={article.CategoryId}
           />
         </div>
       ))}

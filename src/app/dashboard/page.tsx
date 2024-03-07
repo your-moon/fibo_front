@@ -26,7 +26,7 @@ export default function Page() {
 function Dashboard() {
   const token = Cookie.get("token");
   const { isPending, error, data } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["posts"],
     queryFn: () =>
       fetch(`${BACKEND_URL}/users/me/posts`, {
         method: "GET",
@@ -39,7 +39,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
+      console.log(data.data);
     }
   });
 
