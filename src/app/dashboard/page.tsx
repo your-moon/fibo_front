@@ -43,7 +43,24 @@ function Dashboard() {
   });
 
   if (isPending) return <Loading />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error)
+    return (
+      <div className="mx-64 mt-12 mb-20">
+        <div className="flex flex-row ">
+          <h2>{error.message}</h2>
+          <BigCard title="Reputation" value={0} valueColor="text-violet-300" />
+          <BigCard
+            title="Ongoing Salary"
+            value=""
+            valueColor="text-emerald-400"
+          />
+        </div>
+        <h1 className="text-4xl font-bold my-6">My Published Posts</h1>
+        <p>No data</p>
+        <h1 className="text-4xl font-bold my-6">My Drafts</h1>
+        <p>No data</p>
+      </div>
+    );
   if (!token) {
     return (
       <div className="text-center mt-20">
@@ -56,14 +73,10 @@ function Dashboard() {
     return (
       <div className="mx-64 mt-12 mb-20">
         <div className="flex flex-row ">
-          <BigCard
-            title="Reputation"
-            value={100}
-            valueColor="text-violet-300"
-          />
+          <BigCard title="Reputation" value={0} valueColor="text-violet-300" />
           <BigCard
             title="Ongoing Salary"
-            value="1223$"
+            value=""
             valueColor="text-emerald-400"
           />
         </div>
