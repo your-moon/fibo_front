@@ -78,7 +78,7 @@ function Dashboard() {
   }, [data]);
 
   useEffect(() => {
-    if (user) {
+    if (user?.data) {
       setReputation(user.data.reputation);
       if (user.data.reputation == 0) {
         setReputation(1);
@@ -94,6 +94,8 @@ function Dashboard() {
       }
     }
   }, [likes]);
+
+  if (userIsPending || likesIsPending) return <Loading />;
 
   if (isPending) return <Loading />;
   if (error)

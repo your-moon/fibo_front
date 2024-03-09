@@ -42,20 +42,6 @@ export const SinglePost = ({
   const [isLiked, setIsLiked] = React.useState(false);
   const [likesCount, setLikesCount] = React.useState(likes);
   const [catName, setCatName] = useState<string>(""); // [1]
-  const {
-    isPending: isPendingUser,
-    error: errorUser,
-    data: dataUser,
-  } = useQuery({
-    queryKey: ["user"],
-    queryFn: () =>
-      fetch(`${BACKEND_URL}/categories/${categoryId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json() as Promise<SingleCatResponse>),
-  });
 
   const { isPending, error, data } = useQuery({
     queryKey: ["cats"],

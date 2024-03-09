@@ -48,20 +48,23 @@ export default function Posts() {
   console.log(data);
   return (
     <div className="flex flex-row flex-wrap w-8/12 gap-2">
-      {data.data.map((article: RPost) => (
-        <div key={article.Id}>
-          <SinglePost
-            id={article.Id}
-            likes={article.Likes}
-            title={article.Title}
-            content={article.Content}
-            isPublished={article.IsPublished}
-            categoryId={article.CategoryId}
-            userName={article.UserName}
-            userEmail={article.UserEmail}
-          />
-        </div>
-      ))}
+      {data.data
+        .sort((a: RPost, b: RPost) => a.Id - b.Id)
+        .sort((a: RPost, b: RPost) => b.Likes - a.Likes)
+        .map((article: RPost) => (
+          <div key={article.Id}>
+            <SinglePost
+              id={article.Id}
+              likes={article.Likes}
+              title={article.Title}
+              content={article.Content}
+              isPublished={article.IsPublished}
+              categoryId={article.CategoryId}
+              userName={article.UserName}
+              userEmail={article.UserEmail}
+            />
+          </div>
+        ))}
     </div>
   );
 }
