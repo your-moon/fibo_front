@@ -12,7 +12,7 @@ import Cookie from "js-cookie";
 import { BACKEND_URL } from "../provider";
 import Loading from "../components/loader";
 import { BigCard } from "../components/bigcard";
-import { AllUserResponse, SingleUserResponse } from "../admin/page";
+import { SingleUserResponse } from "../actions/models/user";
 
 const queryClient = new QueryClient();
 export default function Page() {
