@@ -93,18 +93,14 @@ export const SinglePost = ({
           color="danger"
           variant="flat"
           onPress={async () => {
-            const res = await fetch(`${BACKEND_URL}/posts/${id}`, {
-              method: "PUT",
+            const res = await fetch(`${BACKEND_URL}/posts/like/${id}`, {
+              method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `${Cookie.get("token")}`,
               },
               body: JSON.stringify({
-                title: title,
-                content: content,
                 likes: isLiked ? likesCount - 1 : likesCount + 1,
-                is_published: isPublished,
-                category_id: categoryId,
               }),
             });
             if (res.ok) {
