@@ -37,7 +37,9 @@ export default function CategoryComp({
 }
 
 function Categories({ categoryId, setCategoryId }: CategoryCompProps) {
-  const [categories, setCategories] = useState<SingleCat[]>([]);
+  const [categories, setCategories] = useState<SingleCat[]>([
+    { Id: 0, Name: "", CreatedAt: "", UpdatedAt: "" },
+  ]);
   const { isPending, error, data } = useQuery({
     queryKey: ["catsX"],
     queryFn: () =>
@@ -64,6 +66,7 @@ function Categories({ categoryId, setCategoryId }: CategoryCompProps) {
     );
 
   console.log(categories);
+  if (categories === null) return <></>;
   return (
     <div className="min-w-[200px] max-w-250px mx-4">
       <Select

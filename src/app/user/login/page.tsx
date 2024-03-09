@@ -13,6 +13,8 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState("");
+  const [isError, setIsError] = React.useState(false);
   const onSubm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const login: Login = {
@@ -20,6 +22,15 @@ export default function Login() {
       password,
     };
     let res = (await fiboLogin(login)) as LoginResponseSuccess;
+    if (res.status === 401) {
+      setError("Invalid credentials");
+      setIsError(true);
+      setTimeout(() => {
+        setError("");
+        setIsError(false);
+      }, 5000);
+      return;
+    }
     if (res.status === 200) {
       if (!res.data?.token) {
         return;
@@ -48,9 +59,14 @@ export default function Login() {
             type="password"
             className="mb-2"
           />
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+            color={isError ? "danger" : "primary"}
+          >
             Login
           </Button>
+          <p className="text-red-500 text-sm mt-2">{error}</p>
         </form>
       </div>
     </div>

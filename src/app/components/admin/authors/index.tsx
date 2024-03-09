@@ -14,7 +14,7 @@ import React from "react";
 import { EyeIcon } from "./EyeIcon";
 import { EditIcon } from "./editIcon";
 import { DeleteIcon } from "./deleteIcon";
-import { GetUser } from "@/app/admin/page";
+import { GetUser } from "@/app/actions/models/user";
 
 const columns = [
   { name: "NAME", uid: "name" },

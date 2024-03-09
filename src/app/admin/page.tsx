@@ -12,20 +12,7 @@ import Loading from "../components/loader";
 import { BigCard } from "../components/bigcard";
 import Authors from "../components/admin/authors";
 import AdminPosts from "../components/admin/posts";
-
-export interface AllUserResponse {
-  status: string;
-  message: string;
-  data: GetUser[];
-}
-
-export interface GetUser {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  reputation: number;
-}
+import { AllUserResponse } from "../actions/models/user";
 
 const queryClient = new QueryClient();
 export default function Page() {

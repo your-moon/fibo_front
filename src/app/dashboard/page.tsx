@@ -12,6 +12,7 @@ import Cookie from "js-cookie";
 import { BACKEND_URL } from "../provider";
 import Loading from "../components/loader";
 import { BigCard } from "../components/bigcard";
+import { AllUserResponse, SingleUserResponse } from "../admin/page";
 
 const queryClient = new QueryClient();
 export default function Page() {
@@ -24,6 +25,22 @@ export default function Page() {
 
 function Dashboard() {
   const token = Cookie.get("token");
+  const {
+    isPending: userIsPending,
+    error: userError,
+    data: users,
+  } = useQuery({
+    queryKey: ["me"],
+    queryFn: () =>
+      fetch(`${BACKEND_URL}/users/me`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+      }).then((res) => res.json() as Promise<SingleUserResponse>),
+  });
+
   const { isPending, error, data } = useQuery({
     queryKey: ["posts"],
     queryFn: () =>
@@ -40,6 +57,12 @@ function Dashboard() {
     if (data) {
       console.log(data.data);
     }
+  }, [data]);
+
+  useEffect(() => {
+    if (users) {
+      console.log(users.data);
+    }
   });
 
   if (isPending) return <Loading />;
@@ -48,7 +71,7 @@ function Dashboard() {
       <div className="mx-64 mt-12 mb-20">
         <h2 className="mx-12 my-5">{error.message}</h2>
         <div className="flex flex-row ">
-          <BigCard title="Reputation" value={0} valueColor="text-violet-300" />
+          <BigCard title="Reputation" value="" valueColor="text-violet-300" />
           <BigCard
             title="Ongoing Salary"
             value=""
