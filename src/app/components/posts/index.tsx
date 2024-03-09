@@ -1,4 +1,10 @@
 "use client";
+export interface LikesResponse {
+  status: number;
+  message: string;
+  data: number;
+}
+
 export interface PostResponse {
   status: number;
   message: string;

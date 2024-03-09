@@ -6,13 +6,14 @@ import {
 } from "@tanstack/react-query";
 import Draft from "../components/myPosts";
 import MyPublishedPosts from "../components/myPublishedPosts";
-import { PostResponse } from "../components/posts";
+import { LikesResponse, PostResponse } from "../components/posts";
 import { useEffect } from "react";
 import Cookie from "js-cookie";
 import { BACKEND_URL } from "../provider";
 import Loading from "../components/loader";
 import { BigCard } from "../components/bigcard";
 import { SingleUserResponse } from "../actions/models/user";
+import React from "react";
 
 const queryClient = new QueryClient();
 export default function Page() {
@@ -24,11 +25,28 @@ export default function Page() {
 }
 
 function Dashboard() {
+  const [reputation, setReputation] = React.useState(0);
+  const [totalLikes, setTotalLikes] = React.useState(0);
   const token = Cookie.get("token");
+  const {
+    isPending: likesIsPending,
+    error: likesError,
+    data: likes,
+  } = useQuery({
+    queryKey: ["likes"],
+    queryFn: () =>
+      fetch(`${BACKEND_URL}/posts/me/likes`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+      }).then((res) => res.json() as Promise<LikesResponse>),
+  });
   const {
     isPending: userIsPending,
     error: userError,
-    data: users,
+    data: user,
   } = useQuery({
     queryKey: ["me"],
     queryFn: () =>
@@ -60,10 +78,22 @@ function Dashboard() {
   }, [data]);
 
   useEffect(() => {
-    if (users) {
-      console.log(users.data);
+    if (user) {
+      setReputation(user.data.reputation);
+      if (user.data.reputation == 0) {
+        setReputation(1);
+      }
     }
-  });
+  }, [user]);
+
+  useEffect(() => {
+    if (likes) {
+      setTotalLikes(likes.data);
+      if (likes.data === 0) {
+        setTotalLikes(1);
+      }
+    }
+  }, [likes]);
 
   if (isPending) return <Loading />;
   if (error)
@@ -96,7 +126,7 @@ function Dashboard() {
     return (
       <div className="mx-64 mt-12 mb-20">
         <div className="flex flex-row ">
-          <BigCard title="Reputation" value={0} valueColor="text-violet-300" />
+          <BigCard title="Reputation" value="" valueColor="text-violet-300" />
           <BigCard
             title="Ongoing Salary"
             value=""
@@ -113,10 +143,18 @@ function Dashboard() {
   return (
     <div className="mx-72 mt-12 mb-20">
       <div className="flex flex-row ">
-        <BigCard title="Reputation" value={100} valueColor="text-violet-300" />
+        <BigCard
+          title="Reputation Point"
+          value={reputation > 0 ? reputation : "Calculating"}
+          valueColor="text-violet-300"
+        />
         <BigCard
           title="Ongoing Salary"
-          value="1223$"
+          value={
+            reputation * totalLikes > 0
+              ? `${reputation * totalLikes}$`
+              : "Calculating"
+          }
           valueColor="text-emerald-400"
         />
       </div>
