@@ -100,26 +100,26 @@ function Dashboard() {
   if (isPending) return <Loading />;
   if (error)
     return (
-      <div className="mx-64 mt-12 mb-20">
+      <div className="mx-64 mt-12 pb-20">
         <h2 className="mx-12 my-5">{error.message}</h2>
         <div className="flex flex-row ">
-          <BigCard title="Reputation" value="" valueColor="text-violet-300" />
           <BigCard
-            title="Ongoing Salary"
+            title="Reputation Оноо"
             value=""
-            valueColor="text-emerald-400"
+            valueColor="text-violet-300"
           />
+          <BigCard title="Сарын цалин" value="" valueColor="text-emerald-400" />
         </div>
-        <h1 className="text-4xl font-bold my-6">My Published Posts</h1>
-        <p>No data</p>
-        <h1 className="text-4xl font-bold my-6">My Drafts</h1>
-        <p>No data</p>
+        <h1 className="text-4xl font-bold my-6">Нийтлэгдсэн пост-ууд</h1>
+        <p>Дата байдгүй ээ</p>
+        <h1 className="text-4xl font-bold my-6">Хадгалагдсан пост-ууд</h1>
+        <p>Дата байдгүй ээ</p>
       </div>
     );
   if (!token) {
     return (
       <div className="text-center mt-20">
-        <h1 className="text-3xl font-bold">You are not logged in</h1>
+        <h1 className="text-3xl font-bold">Та нэвтрээгүй байна.</h1>
       </div>
     );
   }
@@ -128,42 +128,51 @@ function Dashboard() {
     return (
       <div className="mx-64 mt-12 mb-20">
         <div className="flex flex-row ">
-          <BigCard title="Reputation" value="" valueColor="text-violet-300" />
           <BigCard
-            title="Ongoing Salary"
+            title="Reputation Оноо"
             value=""
-            valueColor="text-emerald-400"
+            valueColor="text-violet-300"
           />
+          <BigCard title="Сарын цалин" value="" valueColor="text-emerald-400" />
         </div>
-        <h1 className="text-4xl font-bold my-6">My Published Posts</h1>
-        <p>No data</p>
-        <h1 className="text-4xl font-bold my-6">My Drafts</h1>
-        <p>No data</p>
+        <h1 className="text-4xl font-bold my-6">Нийтлэгдсэн пост-ууд</h1>
+        <p>Дата байдгүй ээ</p>
+        <h1 className="text-4xl font-bold my-6">Хадгалагдсан пост-ууд</h1>
+        <p>Дата байдгүй ээ</p>
       </div>
     );
 
   return (
-    <div className="mx-72 mt-12 mb-20">
-      <div className="flex flex-row ">
-        <BigCard
-          title="Reputation Point"
-          value={reputation > 0 ? reputation : "Calculating"}
-          valueColor="text-violet-300"
-        />
-        <BigCard
-          title="Ongoing Salary"
-          value={
-            reputation * totalLikes > 0
-              ? `${reputation * totalLikes}$`
-              : "Calculating"
-          }
-          valueColor="text-emerald-400"
-        />
+    <div className="flex flex-col mt-20 items-center pb-20">
+      <div className="w-9/12 ">
+        <div className="flex flex-row ">
+          <BigCard
+            title="Reputation Оноо"
+            value={
+              totalLikes * 0.12 > 0 ? `${totalLikes * 0.12}` : "Calculating"
+            }
+            valueColor="text-violet-300"
+          />
+          <BigCard
+            title="Сарын цалин"
+            value={
+              reputation * totalLikes > 0
+                ? `${reputation * totalLikes}$`
+                : "Calculating"
+            }
+            valueColor="text-emerald-400"
+          />
+          <BigCard
+            title="Нийт лайк"
+            value={totalLikes}
+            valueColor="text-blue-400"
+          />
+        </div>
+        <h1 className="text-4xl font-bold my-6">Нийтлэгдсэн пост-ууд</h1>
+        <MyPublishedPosts data={data.data} />
+        <h1 className="text-4xl font-bold my-6">Хадгалагдсан пост-ууд</h1>
+        <Draft data={data.data} />
       </div>
-      <h1 className="text-4xl font-bold my-6">My Published Posts</h1>
-      <MyPublishedPosts data={data.data} />
-      <h1 className="text-4xl font-bold my-6">My Drafts</h1>
-      <Draft data={data.data} />
     </div>
   );
 }

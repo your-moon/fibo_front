@@ -64,44 +64,42 @@ function Admin() {
   });
 
   if (isPending) return <Loading />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div>Алдаа гарлаа: {error.message}</div>;
+
+  if (!users.data) return <div>Дата байдгүй ээ </div>;
+
   if (!token) {
     return (
       <div className="text-center mt-20">
-        <h1 className="text-3xl font-bold">You are not logged in</h1>
+        <h1 className="text-3xl font-bold">Та нэвтрээгүй байна.</h1>
       </div>
     );
   }
 
-  if (!users.data) return <div>No data</div>;
-
   return (
-    <div className="mx-60 mt-12 mb-20">
-      <div className="flex flex-row ">
-        <BigCard
-          title="Total Authors"
-          value={users.data.length}
-          valueColor="text-violet-300"
-        />
-        <BigCard
-          title="Total Posts"
-          value={posts?.data.length}
-          valueColor="text-emerald-400"
-        />
-        <BigCard
-          title="Total Posts"
-          value={posts?.data.length}
-          valueColor="text-emerald-400"
+    <div className="flex flex-col mt-20 items-center pb-20">
+      <div className="w-9/12">
+        <div className="flex flex-row flex-wrap ">
+          <BigCard
+            title="Нийт хэрэглэгч"
+            value={users.data.length}
+            valueColor="text-violet-300"
+          />
+          <BigCard
+            title="Нийт нийтлэлүүд"
+            value={posts?.data.length}
+            valueColor="text-emerald-400"
+          />
+        </div>
+        <h1 className="text-4xl font-bold my-6">Нийт хэрэглэгч нар</h1>
+        <Authors getUsers={users.data} />
+        <h1 className="text-4xl font-bold my-6">Нийт нийтлэлүүд</h1>
+        <AdminPosts
+          isPending={isPostsPending}
+          error={postsError}
+          data={posts?.data}
         />
       </div>
-      <h1 className="text-4xl font-bold my-6">Authors</h1>
-      <Authors getUsers={users.data} />
-      <h1 className="text-4xl font-bold my-6">All Posts</h1>
-      <AdminPosts
-        isPending={isPostsPending}
-        error={postsError}
-        data={posts?.data}
-      />
     </div>
   );
 }

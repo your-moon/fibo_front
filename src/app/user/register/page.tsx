@@ -3,6 +3,9 @@ import { Button, Input } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import { fiboRegister, RegisterResponseSuccess } from "./data";
 import { useRouter } from "next/navigation";
+import { LoginResponseSuccess, fiboLogin } from "../login/data";
+import { Login } from "../login/page";
+import Cookies from "js-cookie";
 export interface Register {
   firstName: string;
   lastName: string;
@@ -29,55 +32,67 @@ export default function Login() {
     console.log(register);
     let res = await fiboRegister(register);
     console.log(res);
-    if (res.status === 200) {
-      const data = res as RegisterResponseSuccess;
-      router.push("/dashboard");
-    }
     if (res.status === 409 || res.status === 400) {
       setError(res.message);
       setIsInvalid(true);
+    }
+
+    if (res.status === 200) {
+      const login: Login = {
+        email: email,
+        password,
+      };
+
+      let res = (await fiboLogin(login)) as LoginResponseSuccess;
+      if (res.status === 200) {
+        if (!res.data?.token) {
+          return;
+        }
+        Cookies.set("token", res?.data.token);
+        router.push("/dashboard");
+      }
     }
   };
   return (
     <div className="h-screen flex flex-row justify-center">
       <div className="flex flex-col items-center mt-40">
         <h1 className="text-6xl font-extrabold mb-20 text-emerald-400">
-          Sign up
+          Бүртгүүлэх
         </h1>
         <form onSubmit={onSubm} className="w-52">
           <Input
             variant="bordered"
-            placeholder="First Name"
+            placeholder="Нэр"
             value={firstName}
             onValueChange={setFirstName}
             className="mb-2"
           />
           <Input
             variant="bordered"
-            placeholder="Last Name"
+            placeholder="Овог"
             value={lastName}
             onValueChange={setLastName}
             className="mb-2"
           />
           <Input
             variant="bordered"
-            placeholder="Email"
+            placeholder="Э-мэйл"
             value={email}
             onValueChange={setEmail}
             isInvalid={isInvalid}
-            errorMessage={error}
             className="mb-2"
           />
           <Input
             variant="bordered"
-            placeholder="Password"
+            placeholder="Нууц үг"
             value={password}
             onValueChange={setPassword}
             type="password"
             className="mb-2"
           />
+          <p className="text-red-500 my-2">{error}</p>
           <Button type="submit" className="w-full">
-            Sign up
+            Бүртгүүлэх
           </Button>
         </form>
       </div>

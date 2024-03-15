@@ -1,6 +1,5 @@
 "use client";
 
-
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import React, { useEffect } from "react";
@@ -18,7 +17,7 @@ const Editor = ({ data, onChange, editorBlock }: EditorProps) => {
   const initEditor = () => {
     if (!ref.current) {
       const editor = new EditorJS({
-        placeholder: "Let`s write an awesome story!",
+        placeholder: "Гоё түүх бичээрэй!",
         holder: editorBlock,
         tools: EDITOR_JS_TOOLS,
         data: data,

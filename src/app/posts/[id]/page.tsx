@@ -36,7 +36,7 @@ function SinglePostPage({ params }: { params: { id: number } }) {
 
   if (isPending) return <Loading />;
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p>Алдаа гарлаа: {error.message}</p>;
 
   return (
     <div className="mt-20 flex flex-col items-center mx-70">

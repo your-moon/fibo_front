@@ -13,6 +13,7 @@ import PostContent from "../postcontent";
 import { SingleCat } from "../category";
 import { BACKEND_URL } from "@/app/provider";
 import { useQuery } from "@tanstack/react-query";
+import { randomIntFromInterval } from "../singlePost";
 
 export interface SingleCatResponse {
   status: string;
@@ -39,6 +40,7 @@ export const EditSinglePost = ({
   userName,
   userEmail,
 }: EditSinglePostProps) => {
+  const randomNum = randomIntFromInterval(1, 8);
   const [catName, setCatName] = useState<string>(""); // [1]
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
@@ -62,7 +64,7 @@ export const EditSinglePost = ({
     <Card
       as={Link}
       href={`/posts/${id}/edit`}
-      className=" flex-auto max-h-80 min-h-44 min-w-[220px] max-w-[280px] mx-1 mb-2"
+      className=" flex-auto max-h-80 min-h-44 max-w-80 mx-1 mb-2"
     >
       <CardHeader className="justify-between">
         <div className="flex gap-5">
@@ -70,7 +72,7 @@ export const EditSinglePost = ({
             isBordered
             radius="full"
             size="md"
-            src="/avatars/avatar-1.png"
+            src={`https://picsum.photos/200/300`}
           />
           <div className="flex flex-col gap-1 items-start justify-center">
             <h4 className="w-28 text-small font-semibold leading-none text-default-600 text-ellipsis overflow-hidden ...">

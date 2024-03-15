@@ -8,7 +8,7 @@ export const BACKEND_URL =
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <NextUIProvider className="h-full">
+    <NextUIProvider>
       <NextThemesProvider
         attribute="class"
         enableSystem={false}

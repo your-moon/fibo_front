@@ -20,21 +20,6 @@ export default function Page() {
     </QueryClientProvider>
   );
 }
-
-// Initial Data
-const INITIAL_DATA = {
-  time: new Date().getTime(),
-  blocks: [
-    {
-      type: "header",
-      data: {
-        text: "This is my awesome editor!",
-        level: 1,
-      },
-    },
-  ],
-};
-
 function Write() {
   const router = useRouter();
   const [data, setData] = React.useState<any>();
@@ -66,11 +51,11 @@ function Write() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="h-full flex flex-col items-center justify-center">
       <Input
         className="max-w-[800px] mx-56 my-20"
         size="lg"
-        placeholder="Title"
+        placeholder="Гарчиг"
         value={title}
         onValueChange={setTitle}
         variant="underlined"
@@ -99,7 +84,7 @@ function Write() {
             isSelected={isPublished}
             onValueChange={setIsPublished}
           >
-            Publish
+            Нийтлэх
           </Checkbox>
           <CategoryComp categoryId={categoryId} setCategoryId={setCategoryId} />
         </div>
@@ -109,7 +94,7 @@ function Write() {
           color={isSaving ? "success" : "default"}
           onClick={bOnClick}
         >
-          Save
+          Хадгалах
         </Button>
       </div>
     </div>

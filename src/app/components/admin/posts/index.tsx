@@ -42,15 +42,14 @@ export default function AdminPosts({
       key={publishedPostIds.join(",")}
       aria-label="posts table"
       isStriped
-      selectionMode="multiple"
       defaultSelectedKeys={publishedPostIds}
     >
       <TableHeader>
-        <TableColumn>Username</TableColumn>
-        <TableColumn>Email</TableColumn>
-        <TableColumn>Title</TableColumn>
-        <TableColumn>Category</TableColumn>
-        <TableColumn>isPublished</TableColumn>
+        <TableColumn>Нэр</TableColumn>
+        <TableColumn>Э-мэйл</TableColumn>
+        <TableColumn>Гарчиг</TableColumn>
+        <TableColumn>Ангилал</TableColumn>
+        <TableColumn>Нийтлэгдсэн</TableColumn>
       </TableHeader>
       <TableBody items={data}>
         {(item: RPost) => (
@@ -60,7 +59,7 @@ export default function AdminPosts({
             <TableCell>{item.Title}</TableCell>
             <TableCell>{item.CategoryId}</TableCell>
             <TableCell>
-              {item.IsPublished ? "Published" : "Not Published"}
+              {item.IsPublished ? "Нийтлэгдсэн" : "Нийтлэгдээгүй"}
             </TableCell>
           </TableRow>
         )}
@@ -68,8 +67,3 @@ export default function AdminPosts({
     </Table>
   );
 }
-// <TableRow key="1">
-//   <TableCell>Tony Reichert</TableCell>
-//   <TableCell>CEO</TableCell>
-//   <TableCell>Active</TableCell>
-// </TableRow>

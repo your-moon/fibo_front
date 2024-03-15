@@ -60,7 +60,7 @@ function Categories({ categoryId, setCategoryId }: CategoryCompProps) {
     return (
       <Select className="min-w-[200px] max-w-250px mx-4" variant="bordered">
         <SelectItem key="0" value="0">
-          Error
+          Алдаа гарлаа
         </SelectItem>
       </Select>
     );
@@ -71,7 +71,7 @@ function Categories({ categoryId, setCategoryId }: CategoryCompProps) {
     <div className="min-w-[200px] max-w-250px mx-4">
       <Select
         variant="bordered"
-        label="Select a category"
+        label="Категори сонгоно уу"
         selectedKeys={[categoryId]}
         onChange={(e) => setCategoryId(e.target.value)}
       >

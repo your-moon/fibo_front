@@ -12,7 +12,7 @@ interface DraftProps {
 
 export default function Draft({ data }: DraftProps) {
   return (
-    <div className="flex flex-row flex-wrap">
+    <div className="flex flex-row flex-wrap gap-2">
       {data
         .filter((post) => !post.IsPublished)
         .map((post: RPost) => (

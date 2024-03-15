@@ -17,10 +17,10 @@ import { DeleteIcon } from "./deleteIcon";
 import { GetUser } from "@/app/actions/models/user";
 
 const columns = [
-  { name: "NAME", uid: "name" },
-  { name: "ROLE", uid: "role" },
-  { name: "STATUS", uid: "status" },
-  { name: "ACTIONS", uid: "actions" },
+  { name: "НЭР", uid: "name" },
+  { name: "РОЛЬ", uid: "role" },
+  { name: "СТАТУС", uid: "status" },
+  { name: "ҮИЛДЭЛ", uid: "actions" },
 ];
 
 const statusColorMap: Record<string, ChipProps["color"]> = {

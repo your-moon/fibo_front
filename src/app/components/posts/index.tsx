@@ -30,8 +30,30 @@ import { useQuery } from "@tanstack/react-query";
 import { SinglePost } from "../singlePost";
 import { BACKEND_URL } from "@/app/provider";
 import Loading from "../loader";
+import PostContent from "../postcontent";
+import { CategoryList } from "../categoryList";
 
-export default function Posts() {
+export interface CategoriesListResponse {
+  status: number;
+  message: string;
+  data: Category[];
+}
+
+export interface Category {
+  Id: number;
+  Name: string;
+  CreatedAt: string;
+  UpdatedAt: string;
+}
+
+export interface PostsProps {
+  searchValue: string;
+}
+
+export default function Posts({ searchValue }: PostsProps) {
+  const [selectedCategory, setSelectedCategory] = React.useState<number | null>(
+    null,
+  );
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
@@ -39,21 +61,49 @@ export default function Posts() {
         (res) => res.json() as Promise<PostResponse>,
       ),
   });
+
+  const {
+    isPending: catIsPending,
+    error: catError,
+    data: catData,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () =>
+      fetch(`${BACKEND_URL}/categories`, {}).then(
+        (res) => res.json() as Promise<CategoriesListResponse>,
+      ),
+  });
+
   if (isPending) return <Loading />;
 
   if (error) return "An error has occurred: " + error.message;
 
-  if (!data.data) return "No data";
+  if (!data.data) return "Дата байдгүй ээ";
 
-  console.log(data);
   return (
-    <div className="flex flex-row flex-wrap w-8/12 gap-2">
-      {data.data
-        .sort((a: RPost, b: RPost) => a.Id - b.Id)
-        .sort((a: RPost, b: RPost) => b.Likes - a.Likes)
-        .map((article: RPost) => (
-          <div key={article.Id}>
+    <div className="flex flex-col items-center">
+      <CategoryList
+        categories={catData?.data}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+      <div className="flex flex-row flex-wrap w-9/12 gap-2">
+        {data.data
+          .filter(
+            (post: RPost) =>
+              searchValue === "" ||
+              post.Title.toLowerCase().includes(searchValue.toLowerCase()) ||
+              post.Content.toLowerCase().includes(searchValue.toLowerCase()),
+          )
+          .filter(
+            (post: RPost) =>
+              !selectedCategory || post.CategoryId === selectedCategory,
+          )
+          .sort((a: RPost, b: RPost) => a.Id - b.Id)
+          .sort((a: RPost, b: RPost) => b.Likes - a.Likes)
+          .map((article: RPost) => (
             <SinglePost
+              key={article.Id}
               id={article.Id}
               likes={article.Likes}
               title={article.Title}
@@ -63,8 +113,8 @@ export default function Posts() {
               userName={article.UserName}
               userEmail={article.UserEmail}
             />
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 }

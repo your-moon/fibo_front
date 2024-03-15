@@ -11,12 +11,14 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { HeartIcon } from "./heartIcon";
-import PostContent from "../postcontent";
 import { BACKEND_URL } from "@/app/provider";
 import Cookie from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
 import { SingleCatResponse } from "../editSinglePost";
-import Loading from "../loader";
+export function randomIntFromInterval(min: number, max: number) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 interface SinglePostProps {
   id: number;
@@ -39,6 +41,7 @@ export const SinglePost = ({
   userName,
   userEmail,
 }: SinglePostProps) => {
+  const randomNum = randomIntFromInterval(1, 8);
   const [isLiked, setIsLiked] = React.useState(false);
   const [likesCount, setLikesCount] = React.useState(likes);
   const [catName, setCatName] = useState<string>(""); // [1]
@@ -56,20 +59,19 @@ export const SinglePost = ({
 
   useEffect(() => {
     if (data && data.data) {
-      console.log(data.data);
       setCatName(data.data.Name); // [2]
     }
   }, [data]);
 
   if (isPending) return <Spinner color="success" className="mx-5" />;
 
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div>Алдаа гарлаа: {error.message}</div>;
 
   return (
     <Card
       as={Link}
       href={`/posts/${id}`}
-      className="flex-auto max-h-80 min-h-44 min-w-[320px] max-w-[350px] mx-1 mb-2"
+      className="flex-auto min-w-72 max-w-96 max-h-80 min-h-44 mx-1 mb-2"
     >
       <CardHeader className="justify-between">
         <div className="flex gap-5">
@@ -77,7 +79,7 @@ export const SinglePost = ({
             isBordered
             radius="full"
             size="md"
-            src="/avatars/avatar-1.png"
+            src={`https://picsum.photos/200/300`}
           />
           <div className="flex flex-col gap-1 items-start justify-center">
             <h4 className="w-28 text-small font-semibold leading-none text-default-600 text-ellipsis overflow-hidden ...">

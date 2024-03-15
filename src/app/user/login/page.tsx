@@ -42,18 +42,20 @@ export default function Login() {
   return (
     <div className="h-screen flex flex-row justify-center">
       <div className="flex flex-col items-center mt-40">
-        <h1 className="text-6xl font-extrabold mb-20 text-indigo-300">Login</h1>
+        <h1 className="text-6xl font-extrabold mb-20 text-indigo-300">
+          Нэвтрэх
+        </h1>
         <form onSubmit={onSubm} className="w-52">
           <Input
             variant="bordered"
-            placeholder="Username"
+            placeholder="Нэр"
             value={email}
             onValueChange={setEmail}
             className="mb-2"
           />
           <Input
             variant="bordered"
-            placeholder="Password"
+            placeholder="Нууц үг"
             value={password}
             onValueChange={setPassword}
             type="password"
@@ -64,7 +66,7 @@ export default function Login() {
             className="w-full"
             color={isError ? "danger" : "primary"}
           >
-            Login
+            Нэвтрэх
           </Button>
           <p className="text-red-500 text-sm mt-2">{error}</p>
         </form>

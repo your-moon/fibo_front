@@ -62,7 +62,7 @@ function EditSinglePost({ params }: { params: { id: number } }) {
   const bOnClick = async () => {
     const token = Cookie.get("token");
     if (!token) {
-      alert("You need to be logged in to do that");
+      alert("Та нэвтрээгүй байна.");
       return;
     }
     if (!data) return;
@@ -92,16 +92,16 @@ function EditSinglePost({ params }: { params: { id: number } }) {
 
   if (isPending) return <Loading />;
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p>Алдаа гарлаа: {error.message}</p>;
 
-  if (!data.data) return <p>No data</p>;
+  if (!data.data) return <p>Дата байдгүй ээ</p>;
 
   return (
     <div className="flex flex-col items-center justify-center">
       <Input
         className="max-w-[800px] mx-56 my-20"
         size="lg"
-        placeholder="Title"
+        placeholder="Гарчиг"
         value={title}
         onValueChange={setTitle}
         variant="underlined"
@@ -128,7 +128,7 @@ function EditSinglePost({ params }: { params: { id: number } }) {
             isSelected={isPublished}
             onValueChange={setIsPublished}
           >
-            Publish
+            Нийтлэх
           </Checkbox>
           <CategoryComp categoryId={categoryId} setCategoryId={setCategoryId} />
         </div>
@@ -138,7 +138,7 @@ function EditSinglePost({ params }: { params: { id: number } }) {
           color={isSaving ? "success" : "default"}
           onClick={bOnClick}
         >
-          Save
+          Хадгалах
         </Button>
       </div>
     </div>
