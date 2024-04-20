@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  labels:
+    app: front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+      - name: front
+        env:
+            - name: NEXT_PUBLIC_BACKEND_URL_FIBO
+              value: "http://127.0.0.1:55333"
+        image: moonnse/fibo-front:v7
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
