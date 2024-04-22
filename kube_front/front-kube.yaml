@@ -18,7 +18,7 @@ spec:
       - name: front
         env:
             - name: NEXT_PUBLIC_BACKEND_URL_FIBO
-              value: "http://127.0.0.1:55333"
+              value: "http://fibo-front.info/api"
         image: moonnse/fibo-front:v7
         imagePullPolicy: Always
         ports:
